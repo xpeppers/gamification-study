@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,4 +16,7 @@ public class Gamification {
                 .collect(Collectors.toList());
     }
 
+    public void scheduleOn(Event event, LocalDateTime dateTime) {
+        events.stream().filter(each -> each.equals(event)).findFirst().get().scheduleOn(dateTime);
+    }
 }

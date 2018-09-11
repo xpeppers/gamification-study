@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GamificationTest {
+    public static final String AUTHOR = "MAF";
     private Gamification gamification;
 
     @Before
@@ -24,7 +25,7 @@ public class GamificationTest {
     public void shouldAddsAScheduledEvent() {
         LocalDateTime now = LocalDateTime.now().plusHours(1);
 
-        gamification.addEvent(new Event("My scheduled presentation", "MAF", now));
+        gamification.addEvent(new Event("My scheduled presentation", AUTHOR, now));
 
         assertThat(gamification.futureEvents().stream().findFirst().get().scheduledOn()).isEqualTo(now);
     }
@@ -33,8 +34,18 @@ public class GamificationTest {
     public void shouldExcludesPastEvents() {
         LocalDateTime now = LocalDateTime.now().minusDays(1);
 
-        gamification.addEvent(new Event("My scheduled presentation", "MAF", now));
+        gamification.addEvent(new Event("My scheduled presentation", AUTHOR, now));
 
         assertThat(gamification.futureEvents()).isEmpty();
+    }
+
+    @Test
+    public void shouldScheduleAnEventAlreadyPresent() {
+        LocalDateTime nextDay = LocalDateTime.now().plusDays(1);
+        gamification.addEvent(new Event("My not scheduled date", AUTHOR));
+
+        gamification.scheduleOn(new Event("My not scheduled date", AUTHOR), nextDay);
+
+        assertThat(gamification.futureEvents().stream().findFirst().get().scheduledOn()).isEqualTo(nextDay);
     }
 }
