@@ -14,7 +14,7 @@ public class EventTest {
     }
 
     @Test
-    public void shouldBeDifferentTo() {
+    public void shouldBeDifferentFrom() {
         assertThat(new Event("another title", "author")).isNotEqualTo(new Event("title", "author"));
         assertThat(new Event("title", "another author")).isNotEqualTo(new Event("title", "author"));
         assertThat(new Event("title", "author")).isNotEqualTo(new Event("title", "author", LocalDateTime.now()));
