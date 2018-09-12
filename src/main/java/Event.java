@@ -32,4 +32,8 @@ public class Event {
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
+
+    public String author() {
+        return author;
+    }
 }

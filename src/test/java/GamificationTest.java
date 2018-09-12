@@ -38,4 +38,13 @@ public class GamificationTest {
 
         assertThat(gamification.futureEvents().stream().findFirst().get().scheduledOn()).isEqualTo(nextDay);
     }
+
+    @Test
+    public void shouldDisplayRanking() {
+        gamification.addEvent(new Event("title", "author"));
+        gamification.addEvent(new Event("another title", "author"));
+        gamification.addEvent(new Event("title", "another author"));
+
+        assertThat(gamification.ranking()).contains(new Rank("author", 2), new Rank("another author", 1));
+    }
 }

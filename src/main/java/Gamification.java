@@ -12,11 +12,15 @@ public class Gamification {
 
     public List<Event> futureEvents() {
         return events.stream()
-                .filter(each -> each.isScheduledInFuture())
+                .filter(Event::isScheduledInFuture)
                 .collect(Collectors.toList());
     }
 
     public void scheduleOn(Event event, LocalDateTime dateTime) {
         events.stream().filter(each -> each.equals(event)).findFirst().get().scheduleOn(dateTime);
+    }
+
+    public List<Rank> ranking() {
+        return new Ranking(events).byAuthor();
     }
 }
