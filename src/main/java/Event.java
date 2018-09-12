@@ -1,5 +1,4 @@
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
 
@@ -9,13 +8,9 @@ public class Event {
     private String author;
 
     public Event(String title, String author) {
-        this(title, author, null);
-    }
-
-    public Event(String title, String author, LocalDateTime dateTime) {
         this.title = title;
         this.author = author;
-        this.dateTime = dateTime;
+        this.dateTime = null;
     }
 
     public LocalDateTime scheduledOn() {
@@ -23,13 +18,14 @@ public class Event {
     }
 
     public boolean isScheduledInFuture() {
-        if(scheduledOn() == null) return true;
+        if (scheduledOn() == null) return true;
 
         return scheduledOn().isAfter(LocalDateTime.now());
     }
 
-    public void scheduleOn(LocalDateTime dateTime) {
+    public Event scheduleOn(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+        return this;
     }
 
     @Override

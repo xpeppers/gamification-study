@@ -21,19 +21,10 @@ public class GamificationTest {
     }
 
     @Test
-    public void shouldAddAScheduledEvent() {
-        LocalDateTime now = LocalDateTime.now().plusHours(1);
-
-        gamification.addEvent(new Event("My scheduled presentation", "author", now));
-
-        assertThat(gamification.futureEvents().stream().findFirst().get().scheduledOn()).isEqualTo(now);
-    }
-
-    @Test
     public void shouldExcludePastEvents() {
-        LocalDateTime now = LocalDateTime.now().minusDays(1);
+        LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
 
-        gamification.addEvent(new Event("My scheduled presentation", "author", now));
+        gamification.addEvent(new Event("My scheduled presentation", "author").scheduleOn(pastDate));
 
         assertThat(gamification.futureEvents()).isEmpty();
     }
